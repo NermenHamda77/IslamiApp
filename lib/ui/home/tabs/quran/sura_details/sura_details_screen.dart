@@ -1,19 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:islami_app/recourses/quran_recourses.dart';
+import 'package:flutter/services.dart';
+import 'package:islami_app/ui/home/tabs/quran/widget/sura_content_widget.dart';
 import 'package:islami_app/utils/app_colors.dart';
 import 'package:islami_app/utils/app_images.dart';
 import 'package:islami_app/utils/app_styles.dart';
+import '../recourses/quran_recourses.dart';
 
-class SuraDetailsScreen extends StatelessWidget {
+class SuraDetailsScreen extends StatefulWidget {
   SuraDetailsScreen({super.key});
 
+  @override
+  State<SuraDetailsScreen> createState() => _SuraDetailsScreenState();
+}
+
+class _SuraDetailsScreenState extends State<SuraDetailsScreen> {
   late int suraArgs;
+
+  String suraContent = "";
+  List<String> suraList = [];
+
+  bool isNormal = true;
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     suraArgs = ModalRoute.of(context)?.settings.arguments as int;
+    if(suraContent.isEmpty){
+      loadSuraFile(suraArgs);
+    }
     return Scaffold(
       backgroundColor: AppColors.blackColor,
       appBar: AppBar(
@@ -21,6 +36,40 @@ class SuraDetailsScreen extends StatelessWidget {
           QuranRecourses.englishSuraList[suraArgs],
           style: AppStyles.bold20Primary,
         ),
+        actions: [
+          /// With No Border
+          IconButton(
+            onPressed: (){
+              if(!isNormal){
+                isNormal = true;
+                setState(() {
+
+                });
+              }
+            },
+            icon: Icon(
+              Icons.view_headline ,
+              color: isNormal ?
+              AppColors.primaryColor:
+              AppColors.offWhiteColor,
+            ),
+          ),
+          /// With Border
+          IconButton(
+            onPressed: (){
+              if(isNormal){
+                isNormal = false;
+                setState(() {
+
+                });
+              }
+            },
+            icon: Icon(Icons.view_agenda_outlined ,
+              color: !isNormal ?
+              AppColors.primaryColor:
+              AppColors.offWhiteColor,),
+          ),
+        ],
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -45,7 +94,41 @@ class SuraDetailsScreen extends StatelessWidget {
                 vertical: height * 0.01,
                 horizontal: width * 0.04,
               ),
-              child: Container(),
+              child:
+
+                  isNormal == true ?
+                  /// To show normal way
+              suraContent.isEmpty ?
+                  Center(child: CircularProgressIndicator(
+                    color: AppColors.primaryColor,
+                  ),)
+              :
+              SingleChildScrollView(
+                child: SuraContentWidget(content: suraContent),
+              ) :
+
+                  /// To show bordered way
+                  suraList.isEmpty ?
+                  Center(child: CircularProgressIndicator(
+                    color: AppColors.primaryColor,
+                  ),)
+                      :
+                  ListView.separated(
+                      itemBuilder: (context , index){
+                        return SuraContentWidget(
+                            content: suraList[index],
+                            isNormal: false,
+                            index: index,
+                        );
+                      },
+                      separatorBuilder: (context , index){
+                        return SizedBox(
+                          height: 10,
+                        );
+                      },
+                      itemCount: suraList.length
+                  ),
+              ///
             ),
           ),
           Image.asset(AppImages.bottomMosque),
@@ -53,4 +136,20 @@ class SuraDetailsScreen extends StatelessWidget {
       ),
     );
   }
+
+  Future<void> loadSuraFile(int suraIndex) async {
+    String filePath = "assets/files/quran/${suraIndex+1}.txt";
+   String fileContent = await rootBundle.loadString(filePath);
+   suraList = fileContent.split("\n");
+   List<String> temp = List.from(suraList);
+
+    for(int i = 0 ; i < temp.length ; i++){
+      temp[i] += "[${i+1}]";
+   }
+   suraContent = temp.join(" ");
+    Future.delayed(Duration(milliseconds: 100));
+   setState(() {});
+
+  }
+
 }

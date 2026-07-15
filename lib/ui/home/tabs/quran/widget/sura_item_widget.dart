@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:islami_app/recourses/quran_recourses.dart';
 import 'package:islami_app/utils/app_colors.dart';
 import 'package:islami_app/utils/app_images.dart';
 import 'package:islami_app/utils/app_styles.dart';
+
+import '../recourses/quran_recourses.dart';
 
 typedef OnSuraClick = void Function(int);
 class SuraItemWidget extends StatelessWidget {
