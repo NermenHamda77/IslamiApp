@@ -16,6 +16,9 @@ class QuranTab extends StatefulWidget {
 }
 
 class _QuranTabState extends State<QuranTab> {
+                                             /// 114 suras
+  List<int> filterList = List.generate(
+      QuranRecourses.arabicSuraList.length, (index)=>index);
   @override
   Widget build(BuildContext context) {
 
@@ -32,6 +35,9 @@ class _QuranTabState extends State<QuranTab> {
         spacing: height*0.015,
         children: [
           TextField(
+            onChanged: (newText){
+              searchNewSura(newText);
+            },
             style: AppStyles.bold16White,
             cursorColor: AppColors.primaryColor,
             decoration: InputDecoration(
@@ -61,10 +67,15 @@ class _QuranTabState extends State<QuranTab> {
             ),
           ),
           Text("Suras List" , style: AppStyles.bold16White,),
+          
+          filterList.isEmpty ?
+              Center(
+                child: Text("No Sura is Found" , style: AppStyles.bold20Primary,),)
+          :
           Expanded(
             child: ListView.separated(
                 itemBuilder: (context , index){
-                  return SuraItemWidget(index: index,onSuraClick: openSuraDetails,);
+                  return SuraItemWidget(index: filterList[index],onSuraClick: openSuraDetails,);
                 },
                 separatorBuilder:(context , index){
                   return Padding(
@@ -77,7 +88,7 @@ class _QuranTabState extends State<QuranTab> {
                     ),
                   );
                 },
-                itemCount: QuranRecourses.arabicSuraList.length
+                itemCount: filterList.length
             ),
           ),
 
@@ -96,8 +107,28 @@ class _QuranTabState extends State<QuranTab> {
     );
   }
 
-  void openSuraDetails(int index) {
+   void openSuraDetails(int index) {
     Navigator.of(context).pushNamed(AppRoutes.suraDetailsRoute ,
     arguments: index);
+  }
+
+  searchNewSura(String newText){
+    List<int> searchResultList = [];
+    for(int i = 0 ; i < QuranRecourses.arabicSuraList.length ; i++){
+      if(QuranRecourses.arabicSuraList[i].contains(newText)){
+        searchResultList.add(i);
+      }
+    }
+
+    for(int i = 0 ; i < QuranRecourses.englishSuraList.length ; i++){
+      if(QuranRecourses.englishSuraList[i].toLowerCase().contains(newText.toLowerCase())){
+        searchResultList.add(i);
+      }
+    }
+
+    filterList = searchResultList;
+    setState(() {
+
+    });
   }
 }

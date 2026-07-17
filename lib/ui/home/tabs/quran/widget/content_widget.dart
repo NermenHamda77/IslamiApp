@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:islami_app/utils/app_colors.dart';
 import 'package:islami_app/utils/app_styles.dart';
 
-class SuraContentWidget extends StatelessWidget {
+class ContentWidget extends StatelessWidget {
   String content;
   bool isNormal;
   int index;
-  SuraContentWidget({super.key ,
+  ContentWidget({super.key ,
      required this.content,
      this.isNormal = true,
       this.index = 0

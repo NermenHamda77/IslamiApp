@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:islami_app/ui/home/tabs/quran/widget/sura_content_widget.dart';
+import 'package:islami_app/ui/home/tabs/quran/widget/content_widget.dart';
 import 'package:islami_app/utils/app_colors.dart';
 import 'package:islami_app/utils/app_images.dart';
 import 'package:islami_app/utils/app_styles.dart';
@@ -104,7 +104,7 @@ class _SuraDetailsScreenState extends State<SuraDetailsScreen> {
                   ),)
               :
               SingleChildScrollView(
-                child: SuraContentWidget(content: suraContent),
+                child: ContentWidget(content: suraContent),
               ) :
 
                   /// To show bordered way
@@ -115,7 +115,7 @@ class _SuraDetailsScreenState extends State<SuraDetailsScreen> {
                       :
                   ListView.separated(
                       itemBuilder: (context , index){
-                        return SuraContentWidget(
+                        return ContentWidget(
                             content: suraList[index],
                             isNormal: false,
                             index: index,
@@ -131,7 +131,7 @@ class _SuraDetailsScreenState extends State<SuraDetailsScreen> {
               ///
             ),
           ),
-          Image.asset(AppImages.bottomMosque),
+          Image.asset(AppImages.quranBottomMosque),
         ],
       ),
     );
