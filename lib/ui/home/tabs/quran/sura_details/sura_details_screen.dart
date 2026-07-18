@@ -4,6 +4,8 @@ import 'package:islami_app/ui/home/tabs/quran/widget/content_widget.dart';
 import 'package:islami_app/utils/app_colors.dart';
 import 'package:islami_app/utils/app_images.dart';
 import 'package:islami_app/utils/app_styles.dart';
+import 'package:provider/provider.dart';
+import '../../../../../widgets/most_recent_provider.dart';
 import '../recourses/quran_recourses.dart';
 
 class SuraDetailsScreen extends StatefulWidget {
@@ -20,12 +22,22 @@ class _SuraDetailsScreenState extends State<SuraDetailsScreen> {
   List<String> suraList = [];
 
   bool isNormal = true;
+  late MostRecentProvider recentProvider;
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    recentProvider.getSavedMostRecent();
+  }
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     suraArgs = ModalRoute.of(context)?.settings.arguments as int;
+    recentProvider = Provider.of<MostRecentProvider>(context);
+
     if(suraContent.isEmpty){
       loadSuraFile(suraArgs);
     }
@@ -50,8 +62,8 @@ class _SuraDetailsScreenState extends State<SuraDetailsScreen> {
             icon: Icon(
               Icons.view_headline ,
               color: isNormal ?
-              AppColors.primaryColor:
-              AppColors.offWhiteColor,
+              AppColors.offWhiteColor:
+              AppColors.primaryColor,
             ),
           ),
           /// With Border
@@ -66,8 +78,9 @@ class _SuraDetailsScreenState extends State<SuraDetailsScreen> {
             },
             icon: Icon(Icons.view_agenda_outlined ,
               color: !isNormal ?
-              AppColors.primaryColor:
-              AppColors.offWhiteColor,),
+              AppColors.offWhiteColor:
+              AppColors.primaryColor,
+            ),
           ),
         ],
       ),

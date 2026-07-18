@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:islami_app/ui/home/tabs/quran/recourses/quran_recourses.dart';
 import 'package:islami_app/ui/home/tabs/quran/widget/recent_sura_widget.dart';
+import 'package:islami_app/ui/home/tabs/quran/widget/search_custom_text_field.dart';
 import 'package:islami_app/ui/home/tabs/quran/widget/sura_item_widget.dart';
 import 'package:islami_app/utils/app_images.dart';
 import 'package:islami_app/utils/app_routes.dart';
 import 'package:islami_app/utils/app_styles.dart';
 
 import '../../../../utils/app_colors.dart';
+import '../../../../widgets/shared_prefs_utils.dart';
 
 class QuranTab extends StatefulWidget {
    QuranTab({super.key});
@@ -34,38 +36,8 @@ class _QuranTabState extends State<QuranTab> {
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: height*0.015,
         children: [
-          TextField(
-            onChanged: (newText){
-              searchNewSura(newText);
-            },
-            style: AppStyles.bold16White,
-            cursorColor: AppColors.primaryColor,
-            decoration: InputDecoration(
-              fillColor: AppColors.blackWithOpacityColor,
-              filled: true,
-              hintText: "Sura Name",
-              hintStyle: AppStyles.bold16White,
-              enabledBorder:  buildBorderStyle(),
-              focusedBorder: buildBorderStyle(),
-              prefixIcon: Image.asset(AppImages.quranImage ,  color: AppColors.primaryColor,),
-            ),
-          ),
-          Text("Most Recently" , style: AppStyles.bold16White,),
-          SizedBox(
-            height: height*0.16,
-            child: ListView.separated(
-              scrollDirection: Axis.horizontal,
-                itemBuilder: (context , index){
-                  return RecentSuraWidget(index: index,);
-                },
-                separatorBuilder:(context , index){
-                  return SizedBox(
-                    width: width*0.02,
-                  );
-                },
-                itemCount: 10
-            ),
-          ),
+          SearchCustomTextField(searchNewSura: searchNewSura),
+          RecentSuraWidget(),
           Text("Suras List" , style: AppStyles.bold16White,),
           
           filterList.isEmpty ?
@@ -97,22 +69,16 @@ class _QuranTabState extends State<QuranTab> {
     );
   }
 
-   OutlineInputBorder buildBorderStyle(){
-    return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(10),
-      borderSide: BorderSide(
-        color: AppColors.primaryColor,
-        width: 2,
-      ),
+  void openSuraDetails(int index) {
+    print("openSuraDetails: $index");
+    saveMostRecent(index);
+    Navigator.of(context).pushNamed(
+      AppRoutes.suraDetailsRoute,
+      arguments: index,
     );
   }
 
-   void openSuraDetails(int index) {
-    Navigator.of(context).pushNamed(AppRoutes.suraDetailsRoute ,
-    arguments: index);
-  }
-
-  searchNewSura(String newText){
+  void searchNewSura(String newText){
     List<int> searchResultList = [];
     for(int i = 0 ; i < QuranRecourses.arabicSuraList.length ; i++){
       if(QuranRecourses.arabicSuraList[i].contains(newText)){

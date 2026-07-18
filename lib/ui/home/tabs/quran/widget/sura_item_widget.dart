@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:islami_app/utils/app_colors.dart';
 import 'package:islami_app/utils/app_images.dart';
 import 'package:islami_app/utils/app_styles.dart';
+import 'package:islami_app/widgets/shared_prefs_utils.dart';
 
 import '../recourses/quran_recourses.dart';
 
@@ -10,7 +11,11 @@ class SuraItemWidget extends StatelessWidget {
   int index;
   OnSuraClick onSuraClick;
 
-  SuraItemWidget({super.key, required this.index , required this.onSuraClick});
+  SuraItemWidget({
+    super.key,
+    required this.index ,
+    required this.onSuraClick
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +23,7 @@ class SuraItemWidget extends StatelessWidget {
     //double height = MediaQuery.of(context).size.height;
     return InkWell(
       onTap: (){
+        print("Tapped");
         onSuraClick(index);
       },
       child: Row(
