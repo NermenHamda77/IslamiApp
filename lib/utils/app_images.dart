@@ -19,5 +19,9 @@ class AppImages {
   static const String hadeethRightCorner = "assets/images/hadeeth_right_corner.png";
   static const String hadeethBackground = "assets/images/hadeeth_card_background.png";
   static const String hadeethBottomMosque = "assets/images/hadeeth_bottom_mosque.png";
+  static const String sebihaHead = "assets/images/sebiha_head.png";
+  static const String sebihaBody = "assets/images/sebiha_body.png";
+
+
 
 }
