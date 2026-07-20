@@ -26,6 +26,8 @@ class AppImages {
   static const String introRadioImage = "assets/images/intro_radio_image.png";
   static const String introQuranImage = "assets/images/intro_quran_image.png";
   static const String introMosqueImage = "assets/images/intro_mosque_image.png";
+  static const String radioPausedImage = "assets/images/audio_paused.png";
+  static const String radioPlayedImage = "assets/images/audio_played_img.png";
 
 
 

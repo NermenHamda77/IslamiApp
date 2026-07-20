@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:islami_app/ui/home/tabs/hadith/hadith_tab.dart';
 import 'package:islami_app/ui/home/tabs/quran/quran_tab.dart';
 import 'package:islami_app/ui/home/tabs/radio/radio_tab.dart';
+import 'package:islami_app/ui/home/tabs/radio/radio_tab_copy.dart';
 import 'package:islami_app/ui/home/tabs/sebiha/sebiha_tab.dart';
 import 'package:islami_app/ui/home/tabs/time/time_tab.dart';
 import 'package:islami_app/utils/app_colors.dart';
@@ -31,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
     4 : AppImages.timeBg,
   };
   List<Widget> tabsList = [
-    QuranTab(), HadithTab() , SebihaTab() , RadioTab() , TimeTab()
+    QuranTab(), HadithTab() , SebihaTab() , RadioTabCopy() , TimeTab()
   ];
 
   @override
