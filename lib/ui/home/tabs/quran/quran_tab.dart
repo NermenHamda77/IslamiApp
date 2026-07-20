@@ -71,7 +71,7 @@ class _QuranTabState extends State<QuranTab> {
 
   void openSuraDetails(int index) {
     print("openSuraDetails: $index");
-    saveMostRecent(index);
+    SharedPrefs.saveMostRecent(index);
     Navigator.of(context).pushNamed(
       AppRoutes.suraDetailsRoute,
       arguments: index,

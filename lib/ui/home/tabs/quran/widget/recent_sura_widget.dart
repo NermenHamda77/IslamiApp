@@ -52,7 +52,7 @@ class _RecentSuraWidgetState extends State<RecentSuraWidget> {
                 itemBuilder: (context , index){
                   return  InkWell(
                     onTap: (){
-                      saveMostRecent(recentProvider.mostRecentList[index]);
+                      SharedPrefs.saveMostRecent(recentProvider.mostRecentList[index]);
                       Navigator.of(context).pushNamed(
                         AppRoutes.suraDetailsRoute,
                         arguments: recentProvider.mostRecentList[index],
