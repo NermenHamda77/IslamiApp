@@ -21,6 +21,11 @@ class AppImages {
   static const String hadeethBottomMosque = "assets/images/hadeeth_bottom_mosque.png";
   static const String sebihaHead = "assets/images/sebiha_head.png";
   static const String sebihaBody = "assets/images/sebiha_body.png";
+  static const String introWelcomeImage = "assets/images/intro_welcome_image.png";
+  static const String introSebhaImage = "assets/images/intro_sebha_image.png";
+  static const String introRadioImage = "assets/images/intro_radio_image.png";
+  static const String introQuranImage = "assets/images/intro_quran_image.png";
+  static const String introMosqueImage = "assets/images/intro_mosque_image.png";
 
 
 
